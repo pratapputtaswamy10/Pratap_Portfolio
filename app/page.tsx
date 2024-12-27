@@ -210,7 +210,7 @@ export default function SmoothScrollingPortfolio() {
       <Mail />
     </Button>
   </Link>
-  <Link href="/path-to-resume.pdf" download aria-label="Download Resume">
+  <Link href="https://drive.google.com/file/d/1uvTN-4rEsOOshoQpDFrES6mI1qjLre1r/view" download aria-label="Download Resume">
     <Button
       variant="outline"
       className="bg-white text-blue-600 hover:bg-blue-100"
