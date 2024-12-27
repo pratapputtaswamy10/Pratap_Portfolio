@@ -118,7 +118,7 @@ export default function SmoothScrollingPortfolio() {
 >
   <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center">
     <Image
-      src="/image.png"
+      src="/pratap_zoom.jpg"
       alt="Pratap Puttaswamy"
       width={200}
       height={200}
