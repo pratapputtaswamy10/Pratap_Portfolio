@@ -1,101 +1,394 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion'
+import { ArrowDownCircle, Download, FileText, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import Image from 'next/image'
+import Link from 'next/link'
+
+
+
+interface SectionWrapperProps {
+  children: React.ReactNode
+  id: string
+}
+
+const SectionWrapper = ({ children, id }: SectionWrapperProps) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px 0px" })
+  
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-20"
+      id={id}
+    >
+      {children}
+    </motion.section>
+  )
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+export default function SmoothScrollingPortfolio() {
+  const [activeSection, setActiveSection] = useState('hero')
+  const scrollContainerRef = useRef(null)
+
+  const { scrollYProgress } = useScroll({
+    target: scrollContainerRef,
+    offset: ["start start", "end end"]
+  })
+
+  const smoothScrollYProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
+
+  const opacity = useTransform(smoothScrollYProgress, [0, 0.2], [1, 0])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100
+      const sections = ['hero', 'about', 'experience', 'skills', 'projects']
+
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element && scrollPosition >= element.offsetTop) {
+          setActiveSection(section)
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToSection = (section: string) => {
+    const element = document.getElementById(section)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  return (
+    <div ref={scrollContainerRef} className="min-h-screen bg-gradient-to-br from-teal-500 via-blue-500 to-indigo-600 text-white">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-10 backdrop-blur-md">
+        <nav className="container mx-auto px-4 py-4">
+          <ul className="flex justify-center space-x-4">
+            {['hero', 'about', 'experience', 'skills', 'projects'].map((section) => (
+              <li key={section}>
+                <Button
+                  variant="ghost"
+                  className={`text-white hover:text-teal-200 ${activeSection === section ? 'border-b-2 border-white' : ''}`}
+                  onClick={() => scrollToSection(section)}
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+
+      <main className="container mx-auto px-4 pt-20">
+      <motion.div
+  className="fixed top-0 left-0 right-0 h-1 bg-teal-300 z-50"
+  style={{ scaleX: scrollYProgress }}
+/>
+
+        <SectionWrapper id="hero">
+          <div className="min-h-screen flex flex-col justify-center items-center text-center">
+
+
+          <motion.div
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  whileHover={{ scale: 1.05 }}
+  transition={{
+    duration: 1.2,
+    delay: 0.5,
+    ease: [0.2, 0.8, 0.2, 1],
+  }}
+  className="relative w-[220px] h-[220px] rounded-full bg-gradient-to-tr from-blue-500 via-teal-400 to-indigo-500 p-[4px] shadow-2xl flex items-center justify-center cursor-pointer glow-border"
+>
+  <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center">
+    <Image
+      src="/image.png"
+      alt="Pratap Puttaswamy"
+      width={200}
+      height={200}
+      className="rounded-full"
+    />
+  </div>
+  
+  {/* Floating Particles */}
+  <div className="absolute inset-0 w-[250px] h-[250px] -z-10 pointer-events-none flex justify-center items-center">
+    {Array.from({ length: 21 }).map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-1.5 h-1.5 bg-white rounded-full opacity-60 animate-float"
+        style={{
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          animationDuration: `${2 + Math.random() * 3}s`,
+          animationDelay: `${Math.random() * 2}s`,
+        }}
+      />
+    ))}
+  </div>
+</motion.div>
+
+<style jsx>{`
+  .glow-border {
+    animation: glow 3s ease-in-out infinite;
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 10px 4px rgba(0, 200, 255, 0.5), 0 0 20px 10px rgba(0, 200, 255, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px 8px rgba(0, 200, 255, 0.7), 0 0 30px 15px rgba(0, 200, 255, 0.5);
+    }
+  }
+
+  .animate-float {
+    position: absolute;
+    animation: floatUpDown linear infinite;
+  }
+
+  @keyframes floatUpDown {
+    0% { transform: translateY(0); opacity: 0.8; }
+    50% { transform: translateY(-8px); opacity: 0.5; }
+    100% { transform: translateY(0); opacity: 0.8; }
+  }
+`}</style>
+
+
+
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="space-y-8 mt-8"
+            >
+              <div>
+                <h1 className="text-4xl md:text-6xl font-bold mb-4">Pratap Puttaswamy</h1>
+                <h2 className="text-2xl md:text-3xl mb-8">Business Analyst & Data Scientist</h2>
+              </div>
+              <div className="flex flex-wrap justify-center gap-4">
+  <Link href="https://www.linkedin.com/in/pratap-puttaswamy/" target="_blank" aria-label="LinkedIn Profile">
+    <Button
+      variant="outline"
+      size="icon"
+      className="bg-white text-blue-600 hover:bg-blue-100"
+    >
+      <Linkedin />
+    </Button>
+  </Link>
+  <Link href="https://github.com/pratap-puttaswamy" target="_blank" aria-label="GitHub Profile">
+    <Button
+      variant="outline"
+      size="icon"
+      className="bg-white text-blue-600 hover:bg-blue-100"
+    >
+      <Github />
+    </Button>
+  </Link>
+  <Link href="mailto:puttaswamy.p@northeastern.edu" aria-label="Email">
+    <Button
+      variant="outline"
+      size="icon"
+      className="bg-white text-blue-600 hover:bg-blue-100"
+    >
+      <Mail />
+    </Button>
+  </Link>
+  <Link href="/path-to-resume.pdf" download aria-label="Download Resume">
+    <Button
+      variant="outline"
+      className="bg-white text-blue-600 hover:bg-blue-100"
+    >
+      <FileText className="mr-2" />
+      Download Resume
+    </Button>
+  </Link>
+</div>
+            </motion.div>
+            <motion.div style={{ opacity }} className="absolute bottom-10">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="animate-bounce"
+                onClick={() => scrollToSection('about')}
+                aria-label="Scroll to About section"
+              >
+                <ArrowDownCircle size={60} />
+              </Button>
+            </motion.div>
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper id="about">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">About Me</h2>
+          <Card className="bg-white bg-opacity-10 backdrop-blur-md">
+            <CardContent className="p-6 md:p-8">
+              <p className="text-base md:text-lg leading-relaxed">
+              I am a Business Analyst and Data Scientist with a passion for turning complex data into actionable insights. Currently completing my Master’s in Business Analytics at Northeastern University, I have hands-on experience across industries, enhancing data governance, developing interactive dashboards, and leading cloud migrations. My goal is to bridge technical expertise with business strategy, creating innovative, efficient solutions that drive impactful results.
+              </p>
+            </CardContent>
+          </Card>
+        </SectionWrapper>
+
+        <SectionWrapper id="experience">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Professional Experience</h2>
+          <div className="space-y-8">
+            {[
+              {
+                title: "Data Science and Analytics Intern",
+                company: "WSP, Boston, USA",
+                date: "June 2024 - Sep 2024",
+                responsibilities: [
+                  "Improved data governance with Profisee MDM",
+                  "Developed and maintained Power BI dashboards",
+                  "Optimized data validation tool in Python"
+                ]
+              },
+              {
+                title: "Associate Consultant Business Intelligence and Micro Automation",
+                company: "Eli Lilly, Bangalore, India",
+                date: "Aug 2021 - May 2022",
+                responsibilities: [
+                  "Led design and development of Power BI dashboards and Power Apps",
+                  "Translated customer requirements into problem statements",
+                  "Engineered VBA macro solutions for process automation"
+                ]
+              },
+              {
+                title: "Senior Consultant",
+                company: "Quinnox, Bangalore, India",
+                date: "Mar 2018 – June 2022",
+                responsibilities: [
+                  "Directed Cloud migration projects of RESTful web services",
+                  "Led team in implementing data-driven solutions for Waste Management, USA",
+                  "Developed fleet management applications",
+                  "Spearheaded advancements in data warehousing and ETL architectures"
+                ]
+              }
+            ].map((job, index) => (
+              <Card key={index} className="bg-white bg-opacity-10 backdrop-blur-md">
+                <CardHeader>
+                  <CardTitle>{job.title}</CardTitle>
+                  <CardDescription className="text-teal-200">{job.company} | {job.date}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="list-disc list-inside space-y-2">
+                    {job.responsibilities.map((resp, i) => (
+                      <li key={i}>{resp}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper id="skills">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Technical Skills</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { title: "Data Science & Analysis", skills: ["Python", "SQL", "Java", "R", "Data profiling", "Data cleansing", "Machine Learning", "Data pipelines", "Automation", "Alteryx"] },
+              { title: "Data Visualization", skills: ["Power BI (DAX, data modeling)", "Tableau", "Excel"] },
+              { title: "Project Management", skills: ["Agile", "Jira", "Git", "GitHub", "PPM Pro", "VBA", "Power Apps"] },
+              { title: "Databases", skills: ["MySQL", "PostgreSQL", "MongoDB", "Microsoft SQL Server", "ETL Processes"] },
+              { title: "Cloud & Version Control", skills: ["Git", "GitHub", "Oracle Fusion", "Profisee MDM"] },
+              { title: "Business Skills", skills: ["Stakeholder Management", "Technical Documentation", "Data Governance Policies"] }
+            ].map((category, index) => (
+              <Card key={index} className="bg-white bg-opacity-10 backdrop-blur-md">
+                <CardHeader>
+                  <CardTitle>{category.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill, i) => (
+                      <Badge key={i} variant="secondary" className="bg-teal-500 text-white">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper id="projects">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Academic Projects</h2>
+          <div className="space-y-8">
+            {[
+              {
+                title: "Transportation Data Analysis for MBTA",
+                date: "Mar 2018 – June 2022",
+                description: [
+                  "Conducted extensive data analysis on MBTA data",
+                  "Developed interactive dashboards in Plotly and Power BI"
+                ]
+              },
+              {
+                title: "Sales Performance Analysis for NOVICA on Amazon",
+                date: "Sep 2024 – Dec 2024",
+                description: [
+                  "Analyzed NOVICA's product sales data on Amazon",
+                  "Implemented statistical and machine learning models for sales forecasting"
+                ]
+              }
+            ].map((project, index) => (
+              <Card key={index} className="bg-white bg-opacity-10 backdrop-blur-md">
+                <CardHeader>
+                  <CardTitle>{project.title}</CardTitle>
+                  <CardDescription className="text-teal-200">{project.date}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="list-disc list-inside space-y-2">
+                    {project.description.map((desc, i) => (
+                      <li key={i}>{desc}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </SectionWrapper>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="bg-white bg-opacity-10 backdrop-blur-md py-8 mt-20">
+        <div className="container mx-auto px-4 text-center">
+          <p>© 2024 Pratap Puttaswamy. All rights reserved.</p>
+          <div className="flex justify-center space-x-4 mt-4">
+            <Link href="mailto:puttaswamy.p@northeastern.edu" aria-label="Email">
+              <Button variant="ghost" size="icon" className="text-white hover:text-teal-200">
+                <Mail />
+              </Button>
+            </Link>
+            <Link href="tel:+18704134505" aria-label="Phone">
+              <Button variant="ghost" size="icon" className="text-white hover:text-teal-200">
+                <Phone />
+              </Button>
+            </Link>
+            <Link href="https://maps.app.goo.gl/EhqAbWxQfnBvxJeR9" target="_blank" aria-label="Location">
+              <Button variant="ghost" size="icon" className="text-white hover:text-teal-200">
+                <MapPin />
+              </Button>
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
