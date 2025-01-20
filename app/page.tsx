@@ -310,13 +310,155 @@ I’m on a mission to channel my expertise into opportunities where I can innova
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Technical Skills</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "Data Science & Analysis", skills: ["Python", "SQL", "Java", "R", "Data profiling", "Data cleansing", "Machine Learning", "Data pipelines", "Automation", "Alteryx"] },
-              { title: "Data Visualization", skills: ["Power BI (DAX, data modeling)", "Tableau", "Excel"] },
-              { title: "Project Management", skills: ["Agile", "Jira", "Git", "GitHub", "PPM Pro", "VBA", "Power Apps"] },
-              { title: "Databases", skills: ["MySQL", "PostgreSQL", "MongoDB", "Microsoft SQL Server", "ETL Processes"] },
-              { title: "Cloud & Version Control", skills: ["Git", "GitHub", "Oracle Fusion", "Profisee MDM"] },
-              { title: "Business Skills", skills: ["Stakeholder Management", "Technical Documentation", "Data Governance Policies"] }
-            ].map((category, index) => (
+  { 
+    title: "Data Science & Analysis", 
+    skills: [
+      "Python (Pandas, NumPy, Scikit-learn)", 
+      "SQL", 
+      "Java", 
+      "R", 
+      "Data Profiling", 
+      "Data Cleansing", 
+      "Machine Learning", 
+      "Data Pipelines", 
+      "Data Automation", 
+      "Alteryx", 
+      "NLP (Natural Language Processing)", 
+      "TensorFlow", 
+      "PyTorch"
+    ] 
+  },
+  { 
+    title: "Data Visualization", 
+    skills: [
+      "Power BI (DAX, Data Modeling)", 
+      "Advanced Excel (VLOOKUP, Pivot Table, Power Query)", 
+      "Tableau", 
+      "Looker", 
+      "QlikView"
+    ] 
+  },
+  { 
+    title: "Programming & Automation", 
+    skills: [
+      "Python", 
+      "R", 
+      "VBA", 
+      "Power Automate", 
+      "Restful APIs", 
+      "Alteryx"
+    ] 
+  },
+  { 
+    title: "Database Management", 
+    skills: [
+      "MySQL", 
+      "PostgreSQL", 
+      "Microsoft SQL Server", 
+      "Oracle Fusion SSMS", 
+      "ETL Processes"
+    ] 
+  },
+  { 
+    title: "Software Testing & Integration", 
+    skills: [
+      "UAT", 
+      "Unit Testing", 
+      "End-to-End System Testing", 
+      "Postman", 
+      "SoapUI", 
+      "JMeter", 
+      "Web Servers"
+    ] 
+  },
+  { 
+    title: "Data Management", 
+    skills: [
+      "Data Migration", 
+      "Data Cleansing", 
+      "Legacy Data Mapping", 
+      "Master Data Management (Profisee, Informatica)", 
+      "Data Pipelines", 
+      "Data Flows"
+    ] 
+  },
+  { 
+    title: "Cloud Platforms & Big Data", 
+    skills: [
+      "AWS (Redshift, SageMaker, S3)", 
+      "Azure (Synapse Analytics, Data Factory)", 
+      "IBM DB2", 
+      "Google Cloud (BigQuery)", 
+      "Apache Spark", 
+      "Hadoop", 
+      "Airflow", 
+      "Kafka", 
+      "Version Control (Git, GitHub)"
+    ] 
+  },
+  { 
+    title: "Project Management & Documentation", 
+    skills: [
+      "Agile Methodologies", 
+      "Jira", 
+      "SDLC", 
+      "Microsoft Word", 
+      "Excel", 
+      "PowerPoint", 
+      "PPM Pro", 
+      "Stakeholder Communication", 
+      "Risk Management", 
+      "PMP Concepts"
+    ] 
+  },
+  { 
+    title: "Advanced Analytics", 
+    skills: [
+      "Forecasting", 
+      "Predictive Modeling", 
+      "Regression", 
+      "Variance Analysis", 
+      "Time Series Analysis", 
+      "Optimization Techniques", 
+      "Bayesian Analysis"
+    ] 
+  },
+  { 
+    title: "Business Skills", 
+    skills: [
+      "Stakeholder Management", 
+      "Technical Documentation", 
+      "Business Process Modeling", 
+      "Data Governance Policies", 
+      "KPI Design and Optimization", 
+      "Cost-Benefit Analysis", 
+      "Requirements Gathering"
+    ] 
+  },
+  { 
+    title: "Statistics & Mathematics", 
+    skills: [
+      "Hypothesis Testing", 
+      "Probability and Statistics", 
+      "Time Series Analysis", 
+      "Optimization Techniques", 
+      "Bayesian Analysis"
+    ] 
+  },
+  { 
+    title: "Soft Skills", 
+    skills: [
+      "Collaboration", 
+      "Critical Thinking", 
+      "Problem Solving", 
+      "Leadership", 
+      "Mentoring", 
+      "Adaptability", 
+      "Effective Communication"
+    ] 
+  }
+]
+.map((category, index) => (
               <Card key={index} className="bg-white bg-opacity-10 backdrop-blur-md">
                 <CardHeader>
                   <CardTitle>{category.title}</CardTitle>
