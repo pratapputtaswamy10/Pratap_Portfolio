@@ -240,8 +240,15 @@ export default function SmoothScrollingPortfolio() {
           <Card className="bg-white bg-opacity-10 backdrop-blur-md">
             <CardContent className="p-6 md:p-8">
               <p className="text-base md:text-lg leading-relaxed">
-              I am a Business Analyst and Data Scientist with a passion for turning complex data into actionable insights. Currently completing my Master’s in Business Analytics at Northeastern University, I have hands-on experience across industries, enhancing data governance, developing interactive dashboards, and leading cloud migrations. My goal is to bridge technical expertise with business strategy, creating innovative, efficient solutions that drive impactful results.
-              </p>
+As a dynamic Business Analyst and Data Scientist, I thrive on uncovering stories hidden in data and transforming them into powerful, actionable insights. My journey in the world of analytics has been nothing short of an exhilarating puzzle-solving adventure—one where I marry technical prowess with strategic thinking to deliver innovative solutions.
+
+Currently, I’m wrapping up my Master’s in Business Analytics at Northeastern University, where I’ve sharpened my skills in cutting-edge data analysis, visualization, and governance practices. Along the way, I’ve gained hands-on experience across diverse industries, diving into projects that involve everything from enhancing data governance frameworks to crafting interactive dashboards that make decision-making a breeze for stakeholders.
+
+But it’s not just about the tools and techniques—it’s about the impact. Whether leading cloud migrations, streamlining operations, or improving data quality, I’m driven by the joy of turning chaos into clarity. Think of me as the translator who speaks the languages of both tech geeks and business executives, bridging gaps to ensure data-driven strategies don’t just make sense—they make a difference.
+
+What sets me apart? A curious mind that’s always eager to learn, a knack for collaboration, and a genuine passion for finding solutions that work in the real world. Add a splash of humor and a sprinkle of creativity, and you’ve got someone who believes that data analysis should be as much about discovery as it is about delivering results.
+
+I’m on a mission to channel my expertise into opportunities where I can innovate, collaborate, and help businesses unlock their full potential. If you’re looking for someone who brings both technical savvy and strategic insight to the table—with a healthy dose of enthusiasm—let’s connect!              </p>
             </CardContent>
           </Card>
         </SectionWrapper>
