@@ -502,8 +502,7 @@ I’m on a mission to channel my expertise into opportunities where I can innova
                 "Implemented dynamic filtering for tweet sources, user interactions, and daily/weekly trends.",
                 "Leveraged DAX and Power Query to generate real-time insights on the most influential tech profiles."
               ],
-              image: "/Twitter_Trends.png"
-              image: "/Influencer_Engagement.png"
+              image: ["/Twitter_Trends.png","/Influencer_Engagement.png"]
             }].map((project, index) => (
               <Card key={index} className="bg-white bg-opacity-10 backdrop-blur-md">
                 <CardHeader>
