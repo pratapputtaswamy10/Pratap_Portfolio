@@ -478,26 +478,32 @@ I’m on a mission to channel my expertise into opportunities where I can innova
         </SectionWrapper>
 
         <SectionWrapper id="projects">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Academic Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Projects</h2>
           <div className="space-y-8">
-            {[
-              {
-                title: "Transportation Data Analysis for MBTA",
-                date: "Mar 2018 – June 2022",
-                description: [
-                  "Conducted extensive data analysis on MBTA data",
-                  "Developed interactive dashboards in Plotly and Power BI"
-                ]
-              },
-              {
-                title: "Sales Performance Analysis for NOVICA on Amazon",
-                date: "Sep 2024 – Dec 2024",
-                description: [
-                  "Analyzed NOVICA's product sales data on Amazon",
-                  "Implemented statistical and machine learning models for sales forecasting"
-                ]
-              }
-            ].map((project, index) => (
+            {[{
+              title: "Transportation Data Analysis for MBTA",
+              date: "Mar 2018 – June 2022",
+              description: [
+                "Conducted extensive data analysis on MBTA data",
+                "Developed interactive dashboards in Plotly and Power BI"
+              ]
+            }, {
+              title: "Sales Performance Analysis for NOVICA on Amazon",
+              date: "Sep 2024 – Dec 2024",
+              description: [
+                "Analyzed NOVICA's product sales data on Amazon",
+                "Implemented statistical and machine learning models for sales forecasting"
+              ]
+            }, {
+              title: "Twitter Trends Analysis",
+              date: "March 2025",
+              description: [
+                "Developed an interactive Power BI dashboard to analyze Twitter trends, user engagement, and influencer statistics.",
+                "Implemented dynamic filtering for tweet sources, user interactions, and daily/weekly trends.",
+                "Leveraged DAX and Power Query to generate real-time insights on the most influential tech profiles."
+              ],
+              image: "/twitter_trends_analysis.png"
+            }].map((project, index) => (
               <Card key={index} className="bg-white bg-opacity-10 backdrop-blur-md">
                 <CardHeader>
                   <CardTitle>{project.title}</CardTitle>
@@ -509,6 +515,15 @@ I’m on a mission to channel my expertise into opportunities where I can innova
                       <li key={i}>{desc}</li>
                     ))}
                   </ul>
+                  {project.image && (
+                    <Image 
+                      src={project.image} 
+                      alt={project.title} 
+                      width={700} 
+                      height={500} 
+                      className="rounded-xl shadow-lg mt-4"
+                    />
+                  )}
                 </CardContent>
               </Card>
             ))}
